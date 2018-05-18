@@ -9,7 +9,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindString;
+
+import butterknife.BindFairString;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
@@ -38,10 +39,10 @@ public class SimpleActivity extends Activity {
   @BindView(R.id.hello) Button hello;
   @BindView(R.id.list_of_things) ListView listOfThings;
   @BindView(R.id.footer) TextView footer;
-  @BindString(R.string.app_name) String butterKnife;
-  @BindString(R.string.field_method) String fieldMethod;
-  @BindString(R.string.by_jake_wharton) String byJakeWharton;
-  @BindString(R.string.say_hello) String sayHello;
+  @BindFairString(R.string.app_name) String butterKnife;
+  @BindFairString(R.string.field_method) String fieldMethod;
+  @BindFairString(R.string.by_jake_wharton) String byJakeWharton;
+  @BindFairString(R.string.say_hello) String sayHello;
 
   @BindViews({ R.id.title, R.id.subtitle, R.id.hello }) List<View> headerViews;
 

@@ -7,10 +7,10 @@ import butterknife.BindBool;
 import butterknife.BindColor;
 import butterknife.BindDimen;
 import butterknife.BindDrawable;
+import butterknife.BindFairString;
 import butterknife.BindFloat;
 import butterknife.BindFont;
 import butterknife.BindInt;
-import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.OnCheckedChanged;
@@ -173,9 +173,9 @@ public final class ButterKnifeProcessor extends AbstractProcessor {
     annotations.add(BindFloat.class);
     annotations.add(BindFont.class);
     annotations.add(BindInt.class);
-    annotations.add(BindString.class);
     annotations.add(BindView.class);
     annotations.add(BindViews.class);
+    annotations.add(BindFairString.class);
     annotations.addAll(LISTENERS);
 
     return annotations;
@@ -303,13 +303,13 @@ public final class ButterKnifeProcessor extends AbstractProcessor {
       }
     }
 
-    // Process each @BindString element.
-    for (Element element : env.getElementsAnnotatedWith(BindString.class)) {
+    // Process each @BindFairString element.
+    for (Element element : env.getElementsAnnotatedWith(BindFairString.class)) {
       if (!SuperficialValidation.validateElement(element)) continue;
       try {
-        parseResourceString(element, builderMap, erasedTargetNames);
+        parseResourceFairString(element, builderMap, erasedTargetNames);
       } catch (Exception e) {
-        logParsingError(element, BindString.class, e);
+        logParsingError(element, BindFairString.class, e);
       }
     }
 
@@ -877,22 +877,22 @@ public final class ButterKnifeProcessor extends AbstractProcessor {
     erasedTargetNames.add(enclosingElement);
   }
 
-  private void parseResourceString(Element element,
-      Map<TypeElement, BindingSet.Builder> builderMap, Set<TypeElement> erasedTargetNames) {
+  private void parseResourceFairString(Element element,
+                                   Map<TypeElement, BindingSet.Builder> builderMap, Set<TypeElement> erasedTargetNames) {
     boolean hasError = false;
     TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
 
     // Verify that the target type is String.
     if (!STRING_TYPE.equals(element.asType().toString())) {
       error(element, "@%s field type must be 'String'. (%s.%s)",
-          BindString.class.getSimpleName(), enclosingElement.getQualifiedName(),
-          element.getSimpleName());
+              BindFairString.class.getSimpleName(), enclosingElement.getQualifiedName(),
+              element.getSimpleName());
       hasError = true;
     }
 
     // Verify common generated code restrictions.
-    hasError |= isInaccessibleViaGeneratedCode(BindString.class, "fields", element);
-    hasError |= isBindingInWrongPackage(BindString.class, element);
+    hasError |= isInaccessibleViaGeneratedCode(BindFairString.class, "fields", element);
+    hasError |= isBindingInWrongPackage(BindFairString.class, element);
 
     if (hasError) {
       return;
@@ -900,11 +900,11 @@ public final class ButterKnifeProcessor extends AbstractProcessor {
 
     // Assemble information on the field.
     String name = element.getSimpleName().toString();
-    int id = element.getAnnotation(BindString.class).value();
-    Id resourceId = elementToId(element, BindString.class, id);
+    int id = element.getAnnotation(BindFairString.class).value();
+    Id resourceId = elementToId(element, BindFairString.class, id);
     BindingSet.Builder builder = getOrCreateBindingBuilder(builderMap, enclosingElement);
     builder.addResource(
-        new FieldResourceBinding(resourceId, name, FieldResourceBinding.Type.STRING));
+            new FieldResourceBinding(resourceId, name, FieldResourceBinding.Type.STRING));
 
     erasedTargetNames.add(enclosingElement);
   }

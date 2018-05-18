@@ -10,7 +10,7 @@ buildscript {
       'androidTools': '26.1.0-alpha09',
       'kotlin': '1.2.21',
 
-      'release': '8.8.1',
+      'release': '8.8.2',
   ]
 
   ext.deps = [
